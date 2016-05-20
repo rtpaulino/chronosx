@@ -1,0 +1,1 @@
+mypoint.meta.js
