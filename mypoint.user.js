@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        Chronos - MyPoint
 // @namespace   https://github.com/rtpaulino/chronosx
-// @version     0.3
+// @version     0.4
 // @description Exibe o horário do ponto de batida da saída para completar as 8:00 de trabalho diário
 // @author      Rafael Paulino <rafael_paulino@atlantico.com.br>
 // @include     http://10.101.40.105/Pages/MyPoint
 // @supportURL  https://github.com/rtpaulino/chronosx/issues
 // @downloadURL https://raw.githubusercontent.com/rtpaulino/chronosx/master/mypoint.user.js
+// @require     http://underscorejs.org/underscore-min.js
 // @require     https://raw.githubusercontent.com/epeli/underscore.string/master/dist/underscore.string.min.js
 // @grant       none
 // ==/UserScript==
@@ -95,4 +96,22 @@ $(function() {
            }
        }
    }, 1000);
+
+    var iframe = $("<iframe></iframe>").attr('src', 'http://10.101.40.105/Pages/Home');
+    iframe.css('position', 'fixed');
+    iframe.css('right', '5px');
+    iframe.css('top', '5px');
+    iframe.css('width', '120px');
+    iframe.css('height', '78px');
+    iframe.appendTo($("body"));
+    iframe.on('load', function () {
+        $("header, footer", iframe.contents()).remove();
+        $(".widgets li:not(:first)", iframe.contents()).remove();
+        $(".widgets", iframe.contents()).removeClass('widgets').removeClass('sortable').css('padding', '0');
+        $("#pageContent", iframe.contents()).css('padding', '0');
+        $("input[type=submit]", iframe.contents()).removeClass('big').css('margin-top', '0');
+        $("li[draggable] div", iframe.contents()).css('text-align', 'center');
+        $("li[draggable] div span", iframe.contents()).css('font-size', '35px');
+    });
+
 });
