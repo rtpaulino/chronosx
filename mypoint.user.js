@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Chronos - MyPoint
 // @namespace   https://github.com/rtpaulino/chronosx
-// @version     0.2
+// @version     0.3
 // @description Exibe o horário do ponto de batida da saída para completar as 8:00 de trabalho diário
 // @author      Rafael Paulino <rafael_paulino@atlantico.com.br>
 // @include     http://10.101.40.105/Pages/MyPoint
@@ -11,11 +11,16 @@
 // @grant       none
 // ==/UserScript==
 
+var makeString = function(object) {
+    if (object == null || typeof object === 'undefined') return '';
+    return '' + object;
+};
+
 var getCurrentDate = function() {
   var d = new Date();
   var day = d.getDate();
   var mon = d.getMonth()+1;
-  return s.lpad(s.makeString(day), 2, "0") + "/" + s.lpad(s.makeString(mon), 2, "0");
+  return s.lpad(makeString(day), 2, "0") + "/" + s.lpad(makeString(mon), 2, "0");
 };
 
 var toMin = function(hora) {
@@ -37,7 +42,7 @@ var incrMin = function(hora, mins) {
   h = (h + Math.floor(m / 60)) % 24;
   m = m % 60;
 
-  return s.lpad(s.makeString(h), 2, "0") + ":" + s.lpad(s.makeString(m), 2, "0");
+  return s.lpad(makeString(h), 2, "0") + ":" + s.lpad(makeString(m), 2, "0");
 }
 
 var incrHora = function(hora, i) {
@@ -53,7 +58,7 @@ var diff = function(hora1, hora2) {
 
 var horaAtual = function() {
   var d = new Date();
-  return s.lpad(s.makeString(d.getHours()), 2, "0") + ":" + s.lpad(s.makeString(d.getMinutes()), 2, "0");
+  return s.lpad(makeString(d.getHours()), 2, "0") + ":" + s.lpad(makeString(d.getMinutes()), 2, "0");
 }
 
 $(function() {
