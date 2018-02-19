@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Chronos - MyPoint
 // @namespace   https://github.com/rtpaulino/chronosx
-// @version     0.5
+// @version     0.6
 // @description Exibe o horário do ponto de batida da saída para completar as 8:00 de trabalho diário
 // @author      Rafael Paulino <rafael_paulino@atlantico.com.br>
 // @include     http://10.101.40.105/Pages/MyPoint
@@ -30,7 +30,7 @@ var toMin = function(hora) {
   var m = parseInt(q[2]);
 
   return h*60+m;
-}
+};
 
 var incrMin = function(hora, mins) {
   mins = mins || 1;
@@ -44,23 +44,23 @@ var incrMin = function(hora, mins) {
   m = m % 60;
 
   return s.lpad(makeString(h), 2, "0") + ":" + s.lpad(makeString(m), 2, "0");
-}
+};
 
 var incrHora = function(hora, i) {
   i = i || 1;
   return incrMin(hora, i*60);
-}
+};
 
 var diff = function(hora1, hora2) {
   var m1 = toMin(hora1);
   var m2 = toMin(hora2);
   return m2 - m1;
-}
+};
 
 var horaAtual = function() {
   var d = new Date();
   return s.lpad(makeString(d.getHours()), 2, "0") + ":" + s.lpad(makeString(d.getMinutes()), 2, "0");
-}
+};
 
 $(function() {
    setInterval(function () {
@@ -104,6 +104,7 @@ $(function() {
     iframe.css('width', '120px');
     iframe.css('height', '78px');
     iframe.css('border', '1px solid #DDDDDD');
+    iframe.css('z-index', '10000');
     iframe.appendTo($("body"));
     iframe.on('load', function () {
         if (!s.endsWith(this.contentWindow.location.href, 'Home')) {
@@ -112,6 +113,7 @@ $(function() {
             $("header, footer", iframe.contents()).remove();
             $(".widgets li:not(:first)", iframe.contents()).remove();
             $(".widgets", iframe.contents()).removeClass('widgets').removeClass('sortable').css('padding', '0');
+            $('#interface', iframe.contents()).css('padding-top', '0');
             $("#pageContent", iframe.contents()).css('padding', '0');
             $("input[type=submit]", iframe.contents()).removeClass('big').css('margin-top', '0');
             $("li[draggable] div", iframe.contents()).css('text-align', 'center');
